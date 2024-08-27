@@ -12,6 +12,7 @@ import ResCard from "./components/ResCard";
 import { Provider } from "react-redux";
 import appStore from "./utils/appStore";
 import Login from "./components/Login";
+import SignUp from "./components/SignUp";
 
 const queryClient = new QueryClient();
 const router = createBrowserRouter([
@@ -40,6 +41,10 @@ const router = createBrowserRouter([
       {
         path: "/login",
         element: <Login />,
+      },
+      {
+        path: "/signup",
+        element: <SignUp />,
       },
     ],
   },

@@ -1,27 +1,28 @@
 import { useDispatch, useSelector } from "react-redux";
-import { LOGO_URL } from "../utils/constants";
+
 import { Link, useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 
-import {
-  HiArrowCircleRight,
-  HiOutlineHome,
-  HiShoppingCart,
-} from "react-icons/hi";
+import { HiShoppingCart } from "react-icons/hi";
 import { IoIosHelpBuoy } from "react-icons/io";
 import { HiHome } from "react-icons/hi2";
-import { setIsLoggedin, setUserName } from "../utils/userSlice";
-
+import { setIsLoggedin, setUname, setUserDetails } from "../utils/userSlice";
+import { HiArrowCircleRight } from "react-icons/hi";
 function Header() {
-  const items = useSelector((store) => store.cart.items);
-  const user = useSelector((store) => store.user.user);
-  const isLoggedin = useSelector((store) => store.user.isLoggedin);
   const dispatch = useDispatch();
 
   const navigate = useNavigate();
+  const userData = useSelector((store) => store.user.userData);
+  const user = useSelector((store) => store.user.uname);
+  console.log(userData);
+
+  const items = useSelector((store) => store.cart.items);
+
+  const isLoggedin = useSelector((store) => store.user.isLoggedin);
   function handleLogout() {
     dispatch(setIsLoggedin(false));
-    dispatch(setUserName(""));
+    dispatch(setUname(""));
+    dispatch(setUserDetails({}));
   }
 
   return (
