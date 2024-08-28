@@ -6,21 +6,24 @@ function SignUp() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [phone, setPhone] = useState("");
+  const [error, setError] = useState("");
 
   const dispatch = useDispatch();
 
   function handleSubmit(e) {
     e.preventDefault();
     if (!email || !password || !phone) {
+      setError("pls enter all fields ");
       return;
+    } else {
+      dispatch(
+        setUserDetails({ email: email, password: password, phone: phone })
+      );
+      setEmail("");
+      setPassword("");
+      setPhone("");
+      setError("");
     }
-
-    dispatch(
-      setUserDetails({ email: email, password: password, phone: phone })
-    );
-    setUname("");
-    setPassword("");
-    setPhone("");
   }
 
   return (
@@ -45,7 +48,8 @@ function SignUp() {
               Email
             </label>
             <input
-              type="text"
+              type="email"
+              value={email}
               className="border-2 border-gray-600 rounded-lg  "
               onChange={(e) => setEmail(e.target.value)}
             />
@@ -59,6 +63,7 @@ function SignUp() {
             </label>
             <input
               type="number"
+              value={phone}
               className="border-2 border-gray-600 rounded-lg  "
               onChange={(e) => setPhone(e.target.value)}
             />
@@ -72,10 +77,12 @@ function SignUp() {
             </label>
             <input
               type="password"
+              value={password}
               className="border-2 border-gray-600 rounded-lg  "
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
+          {error && <p className="text-red-400 text-sm ">{error}</p>}
           <button className="w-6/12 flex justify-center text-center mx-auto border-2 bg-orange-400 mt-8 p-1 rounded-xl ">
             Submit
           </button>

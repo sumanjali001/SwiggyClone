@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "./Header";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setIsLoggedin } from "../utils/userSlice";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -9,12 +10,22 @@ function Login() {
   const [error, setError] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const user = useSelector((store) => store.user.userData);
+
   function handleSubmit(e) {
     e.preventDefault();
     if (!email || !password) {
       setError("Pls enter both fields to proceed");
       return;
     }
+    if (email === user.email && password === user.password) {
+      dispatch(setIsLoggedin(true));
+      navigate("/");
+    } else {
+      setError("Pls enter valid user and password");
+    }
+    setEmail("");
+    setPassword("");
   }
   return (
     <div className="flex justify-center items-center  h-screen bg-gray-100">
@@ -38,7 +49,8 @@ function Login() {
               Email
             </label>
             <input
-              type="text"
+              type="email"
+              value={email}
               className="border-2 border-gray-600 rounded-lg  "
               onChange={(e) => setEmail(e.target.value)}
             />
@@ -52,6 +64,7 @@ function Login() {
             </label>
             <input
               type="password"
+              value={password}
               className="border-2 border-gray-600 rounded-lg "
               onChange={(e) => setPassword(e.target.value)}
             />

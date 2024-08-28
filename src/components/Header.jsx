@@ -12,9 +12,9 @@ function Header() {
   const dispatch = useDispatch();
 
   const navigate = useNavigate();
-  const userData = useSelector((store) => store.user.userData);
+
   const user = useSelector((store) => store.user.uname);
-  console.log(userData);
+  const isSignin = useSelector((store) => store.user.isSignin);
 
   const items = useSelector((store) => store.cart.items);
 
@@ -74,7 +74,14 @@ function Header() {
           )}
 
           <li className="px-2">
-            {isLoggedin ? (
+            {!isSignin ? (
+              <Link to="/signup">
+                <button className="flex gap-1">
+                  Signup
+                  <HiArrowCircleRight className="my-1" />
+                </button>
+              </Link>
+            ) : isLoggedin ? (
               <button className="flex gap-1" onClick={handleLogout}>
                 Logout
                 <HiArrowCircleRight className="my-1" />
@@ -99,6 +106,23 @@ export default Header;
 Header.propTypes = {
   uname: PropTypes.string.isRequired,
 };
+
+{
+  /**
+  isLoggedin ? (
+              <button className="flex gap-1" onClick={handleLogout}>
+                Logout
+                <HiArrowCircleRight className="my-1" />
+              </button>
+            ) : (
+              <Link to="/login">
+                <button className="flex gap-1">
+                  Login
+                  <HiArrowCircleRight className="my-1" />
+                </button>
+              </Link>
+            ) */
+}
 {
   /**
   <div className="flex justify-between bg-pink-100 shadow-lg sm:bg-yellow-50 lg:bg-green-50">
